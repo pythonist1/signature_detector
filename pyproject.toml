@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "test-task"
+version = "0.1.0"
+description = ""
+authors = ["Az <az.architector@gmail.com>"]
+readme = "README.md"
+packages = [
+    {include = "signature_detector", from="src"},
+    {include = "word_detector_original_package", from="src"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+sqlalchemy = "^2.0.4"
+pydantic = "^1.10.5"
+python-dotenv = "^0.21.1"
+asyncpg = "^0.27.0"
+greenlet = "^2.0.2"
+opencv-python = "^4.7.0.68"
+path = "^16.6.0"
+scikit-learn = "^1.2.1"
+torch = "^1.13.1"
+matplotlib = "^3.7.0"
+fastapi = "^0.92.0"
+uvicorn = "^0.20.0"
+python-multipart = "^0.0.5"
+aiohttp = "^3.8.4"
+numpy = "^1.24.2"
+pytest = "^7.3.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest-asyncio = "^0.20.3"
+pytest-trio = "^0.8.0"
+pytest-tornasync = "^0.6.0.post2"
+poethepoet = "^0.18.1"
+pylama = "^8.4.1"
+pytest = "^7.2.1"
+pytest-cov = "^4.0.0"
+pytest-sanic = "^1.9.1"
+sanic = "^22.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+run_api = "signature_detector.api.run_api:run"
+
+[tool.poe.tasks]
+test = "poetry run pytest --cov=./src/signature_detector --cov-report=term-missing"
+lint = "poetry run pylama ./src/signature_detector --ignore E501,W0611,E704 --linters print,pyflakes,pycodestyle,mccabe --format pylint"
